@@ -1,0 +1,23 @@
+{
+  "manifest_version": 2,
+
+  "name": "Etymonline.com Popups",
+  "description": "Popups results from etymonline.com",
+  "version": "1.0",
+
+  "permissions": [
+  ],
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.yahoo.com/*"],
+	"css": ["css/dict.css"],
+	"js": ["js/jquery-2.1.1.min.js", "js/dict.js"],
+	"run_at": "document_end",
+	"all_frames": true
+    }
+  ]
+}

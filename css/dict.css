@@ -1,0 +1,19 @@
+#dict-helper {
+
+  display: none;
+
+  position: fixed;
+  opacity: 0.90;
+  background-color: rgb(243, 215, 174);
+  width: 60%;
+
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  font-size: 1.4em;
+
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
