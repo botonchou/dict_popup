@@ -37,6 +37,7 @@ $(function () {
     // Append crawled data to helper pop-up
     $helper.append($data);
     $helper.append("<a href='" + URL + prevQuery + "'  target='_blank'>more...</a>");
+    $helper.append("<br/>" + data.match(/<a id='your-query-history'.*$/));
 
     // Fade in pop-up
     $helper.fadeIn();
@@ -59,7 +60,7 @@ $(function () {
       prevQuery = query;
 
       $.ajax({
-	url: 'http://140.112.21.18/urlget.php',
+	url: 'http://140.112.21.18/dict_pop/urlget.php',
 	data: {url: URL + prevQuery},
 	success: onSuccess
       });
