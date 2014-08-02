@@ -3,26 +3,42 @@ $(function () {
   var $helper = $("<div id='dict-helper'></div>");
   $helper.appendTo("body");
 
-  var URL = "http://etymonline.com/index.php?allowed_in_frame=0&searchmode=none&search=";
+  var ETYMOLOGY_DOT_COM = "http://etymonline.com/";
+
+  var URL = ETYMOLOGY_DOT_COM + "index.php?allowed_in_frame=0&searchmode=none&search=";
   var prevQuery = "";
   var reading = false;
   var timer = null;
 
   function onSuccess(data) {
+    // Clear previous content
     $helper.empty();
     
     // Remove images
     var $data = $(data.replace(/<img[^>]*>/g, "")).find("dl");
+    $data.find(".dictionary").remove();
 
-    var first  = $($data.find("dt")[0]).find("a").text().replace(/ \(.*$/g, '');
-    var second = $($data.find("dt")[1]).find("a").text().replace(/ \(.*$/g, '');
+    // Remove unmatch terms. Ex: remove "condescending" when query=="condescend"
+    $data.find("dt a").each(function () {
+      var $e = $(this);
+      if ($e.text().replace(/ \(.*$/g, '') != prevQuery) {
+	$e.parent().next().remove();
+	$e.parent().remove();
+      }
+    });
 
-    var N = (first == second) ? 1 : 0;
-    $($data.find("dd")[N]).nextAll().remove();
+    // Prepend Etymology.com to hyperlinks
+    $data.find('a').each(function () {
+      var $e = $(this);
+      $e.attr('href', ETYMOLOGY_DOT_COM + $e.attr('href'));
+      $e.attr('target', '_blank');
+    });
 
+    // Append crawled data to helper pop-up
     $helper.append($data);
     $helper.append("<a href='" + URL + prevQuery + "'  target='_blank'>more...</a>");
 
+    // Fade in pop-up
     $helper.fadeIn();
   }
 
